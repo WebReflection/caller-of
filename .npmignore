@@ -1,0 +1,7 @@
+src/*
+test/*
+node_modules/*
+build/caller-of.max.js
+build/caller-of.js
+Makefile
+test.html

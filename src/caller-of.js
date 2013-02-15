@@ -1,0 +1,1 @@
+function callerOf(c) {'use strict'; return c.bind.call(c.call, c); }
