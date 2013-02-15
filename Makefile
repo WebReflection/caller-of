@@ -39,6 +39,8 @@ pages:
 	cp -rf test ~/tmp/$(REPO)
 	cp index.html ~/tmp/$(REPO)
 	git checkout gh-pages
+	mkdir -p test
+	rm -rf test
 	cp -rf ~/tmp/$(REPO) test
 	git add .
 	git commit -m 'automatic test generator'
