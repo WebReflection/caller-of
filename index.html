@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="caller-of : The tiniest yet most powerful JS utility ever :D" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>caller-of</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/WebReflection/caller-of">View on GitHub</a>
+
+          <h1 id="project_title">caller-of</h1>
+          <h2 id="project_tagline">The tiniest yet most powerful JS utility ever :D</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/WebReflection/caller-of/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/WebReflection/caller-of/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>caller-of</h1>
+
+<p>The tiniest yet most powerful JS utility ever :D</p>
+
+<div class="highlight"><pre><span class="cm">/*! (C) WebReflection, Mit Style License */</span>
+<span class="kd">function</span> <span class="nx">callerOf</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span><span class="s1">'use strict'</span><span class="p">;</span> <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">bind</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">call</span><span class="p">,</span> <span class="nx">c</span><span class="p">);</span> <span class="p">}</span>
+</pre></div>
+
+<h3>What Does Above Code Do</h3>
+
+<p>Here is what we usually do</p>
+
+<div class="highlight"><pre><span class="nx">object</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</pre></div>
+
+<p>Here is what <code>callerOf</code> create</p>
+
+<div class="highlight"><pre><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+</pre></div>
+
+<p>so we can borrow any method at any time and reuse it in a minifier friendly way.</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">bind</span> <span class="o">=</span> <span class="nx">callerOf</span><span class="p">(</span><span class="nb">Function</span><span class="p">.</span><span class="nx">bind</span><span class="p">);</span>
+
+<span class="c1">// easy log</span>
+<span class="kd">var</span> <span class="nx">log</span> <span class="o">=</span> <span class="nx">bind</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">,</span> <span class="nx">console</span><span class="p">);</span>
+<span class="nx">log</span><span class="p">(</span><span class="s1">'it works'</span><span class="p">);</span>
+
+<span class="c1">// common borrowed methods</span>
+<span class="kd">var</span>
+  <span class="nx">has</span> <span class="o">=</span> <span class="nx">callerOf</span><span class="p">({}.</span><span class="nx">hasOwnProperty</span><span class="p">),</span>
+  <span class="nx">whoIs</span> <span class="o">=</span> <span class="nx">callerOf</span><span class="p">({}.</span><span class="nx">toString</span><span class="p">),</span>
+  <span class="nx">forEach</span> <span class="o">=</span> <span class="nx">callerOf</span><span class="p">([].</span><span class="nx">forEach</span><span class="p">),</span>
+  <span class="nx">slice</span> <span class="o">=</span> <span class="nx">callerOf</span><span class="p">([].</span><span class="nx">slice</span><span class="p">);</span>
+
+<span class="nx">has</span><span class="p">({</span><span class="nx">a</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span> <span class="s2">"a"</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nx">has</span><span class="p">({</span><span class="nx">a</span><span class="o">:</span><span class="mi">1</span><span class="p">},</span> <span class="s2">"toString"</span><span class="p">);</span> <span class="c1">// false</span>
+
+<span class="nx">whoIs</span><span class="p">([]);</span>    <span class="c1">// "[object Array]"</span>
+<span class="nx">whoIs</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span> <span class="c1">// "[object Boolean]"</span>
+
+<span class="nx">slice</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">"*"</span><span class="p">));</span> <span class="c1">// array</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">obj</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nx">slice</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}());</span>
+
+<span class="nx">forEach</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">"body"</span><span class="p">),</span> <span class="nx">log</span><span class="p">);</span>
+</pre></div>
+
+<h3>Compatibility</h3>
+
+<p>Every JavaScript engine I know, included IE.</p>
+
+<p>For <em>node.js</em> simply <code>npm install caller-of</code> then <code>var callerOf = require('caller-of')</code></p>
+
+<h3>What If No Function.prototype.bind</h3>
+
+<p>You can use this tiny yet working polyfill ^_^</p>
+
+<div class="highlight"><pre><span class="c1">// 139 bytes gzipped</span>
+<span class="cm">/*! (C) WebReflection, Mit Style License */</span>
+<span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">P</span><span class="p">)</span> <span class="p">{</span>
+  <span class="s1">'use strict'</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">P</span><span class="p">.</span><span class="nx">bind</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">P</span><span class="p">.</span><span class="nx">bind</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span>
+        <span class="nx">c</span> <span class="o">=</span> <span class="k">this</span><span class="p">,</span>
+        <span class="nx">l</span> <span class="o">=</span> <span class="p">[].</span><span class="nx">slice</span><span class="p">,</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+      <span class="k">return</span> <span class="kd">function</span> <span class="nx">bind</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)));</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}(</span><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">));</span>
+</pre></div>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">caller-of maintained by <a href="https://github.com/WebReflection">WebReflection</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
