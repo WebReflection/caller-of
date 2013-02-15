@@ -5,4 +5,4 @@ node_modules/*
 build/caller-of.amd.js
 build/caller-of.js
 Makefile
-test.html
+index.html
