@@ -1,5 +1,8 @@
 .PHONY: clean test dependencies
 
+# repository name
+REPO = repo_name
+
 # default build task
 build:
 	mkdir -p build
@@ -29,6 +32,21 @@ test:
 web:
 	node node_modules/polpetta/build/polpetta ./
 
+# copy some stuff over gh-pages repository
+pages:
+	mkdir -p ~/tmp/$(REPO)
+	cp -rf build ~/tmp/$(REPO)
+	cp -rf test ~/tmp/$(REPO)
+	cp index.html ~/tmp/$(REPO)/test.html
+	git checkout gh-pages
+	cp ~/tmp/$(REPO) build
+	cp ~/tmp/$(REPO) test
+	cp ~/tmp/$(REPO)/test.html test.html
+	git add .
+	git commit -m 'automatic test generator'
+	git push
+	git checkout master
+	rm -r ~/tmp/$(REPO)
 
 # modules used in this repo
 dependencies:
