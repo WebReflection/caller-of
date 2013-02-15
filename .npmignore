@@ -1,5 +1,6 @@
 src/*
 test/*
+template/*
 node_modules/*
 build/caller-of.max.js
 build/caller-of.js
