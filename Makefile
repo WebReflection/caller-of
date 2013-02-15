@@ -37,11 +37,9 @@ pages:
 	mkdir -p ~/tmp/$(REPO)
 	cp -rf build ~/tmp/$(REPO)
 	cp -rf test ~/tmp/$(REPO)
-	cp index.html ~/tmp/$(REPO)/test.html
+	cp index.html ~/tmp/$(REPO)
 	git checkout gh-pages
-	cp -rf ~/tmp/$(REPO) build
 	cp -rf ~/tmp/$(REPO) test
-	cp ~/tmp/$(REPO)/test.html test.html
 	git add .
 	git commit -m 'automatic test generator'
 	git push
