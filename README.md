@@ -48,7 +48,9 @@ forEach(document.getElementsByTagName("body"), log);
 ```
 
 ### Compatibility
-Every JavaScript engine I know, included IE
+Every JavaScript engine I know, included IE.
+
+For *node.js* simply `npm install caller-of` then `var callerOf = require('caller-of')`
 
 ### What If No Function.prototype.bind
 You can use this tiny yet working polyfill ^_^
