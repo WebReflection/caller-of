@@ -8,7 +8,17 @@ The tiniest yet most powerful JS utility ever :D
 function callerOf(c) {'use strict'; return c.bind.call(c.call, c); }
 ```
 
-### Examples
+### What Does Above Code Do
+Here is what we usually do
+```JavaScript
+object.hasOwnProperty(key)
+```
+Here is what `callerOf` create
+```JavaScript
+hasOwnProperty(object, key)
+```
+so we can borrow any method at any time and reuse it in a minifier friendly way.
+
 ```JavaScript
 var bind = callerOf(Function.bind);
 
@@ -37,8 +47,11 @@ slice(document.querySelectorAll("*")); // array
 forEach(document.getElementsByTagName("body"), log);
 ```
 
+### Compatibility
+Every JavaScript engine I know, included IE
+
 ### What If No Function.prototype.bind
-You can use this tiny yet working properly polyfill ^_^_
+You can use this tiny yet working polyfill ^_^
 ```JavaScript
 // 139 bytes gzipped
 /*! (C) WebReflection, Mit Style License */
