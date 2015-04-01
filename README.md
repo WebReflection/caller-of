@@ -5,7 +5,7 @@ The tiniest yet most powerful JS utility ever :D
 
 ```JavaScript
 /** WTFPL Style License */
-function callerOf(c) {'use strict';return c.call.bind(c)}
+function callerOf(c) {return c.call.bind(c)}
 ```
 
 ### What Does Above Code Do
